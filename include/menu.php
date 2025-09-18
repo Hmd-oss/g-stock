@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><?php echo strtoupper(ucfirst(str_replace(".php", "", basename($_SERVER['PHP_SELF']))));?></title>
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -25,7 +25,7 @@
           <a class="nav-link active" aria-current="page" href="../admin/client.php">Clients</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Fournisseurs</a>
+          <a class="nav-link" href="../admin/fournisseur.php">Fournisseurs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Produits</a>
@@ -35,6 +35,9 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Factures</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Category_Produits</a>
         </li>
 
       </ul>
