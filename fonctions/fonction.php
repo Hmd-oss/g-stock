@@ -1,5 +1,5 @@
 <?php
-
+include("../database/connexion.php");
 function generate_uuid_v4() {
     // Générer un UUID v4
     $data = random_bytes(16);
@@ -50,6 +50,32 @@ function getCurrentPageName() {
     return $pageName;
 }
 
+function get_all_clients($connexion, int $page = 1, int $limit = 25): array {
+    $offset = ($page - 1) * $limit;
 
+    //  Récupérer le total des utilisateurs
+    $count_users = $connexion->query("SELECT COUNT(*) FROM tlbl_clients WHERE is_deleted = 0");
+    $total = (int) $count_users->fetchColumn();
+    $total_pages = max(1, ceil($total / $limit)); // éviter division par zéro
+
+    //  Préparer la requête paginée
+    $all_users = $connexion->prepare("
+        SELECT * 
+        FROM tlbl_clients 
+        WHERE is_deleted = 0 
+        ORDER BY created_at DESC 
+        LIMIT :limit OFFSET :offset
+    ");
+    $all_users->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $all_users->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $all_users->execute();
+    $users = $all_users->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'data' => $users,
+        'total_pages' => $total_pages,
+        'current_page' =>$page
+];
+}
 
 ?>
