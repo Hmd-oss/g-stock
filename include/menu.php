@@ -8,6 +8,8 @@
      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
      <link rel="stylesheet" href="../assets/css/main.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 </head>
 <body>
     
@@ -28,7 +30,7 @@
           <a class="nav-link" href="../admin/fournisseur.php">Fournisseurs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Produits</a>
+          <a class="nav-link" href="../admin/product.php">Produits</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Ventes</a>
@@ -37,7 +39,7 @@
           <a class="nav-link" href="#">Factures</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Category_Produits</a>
+          <a class="nav-link" href="../admin/category_product.php">Category_Produits</a>
         </li>
 
       </ul>
@@ -52,6 +54,6 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-<script src="../assets/js/main.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
 </body>
 </html>

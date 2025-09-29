@@ -12,6 +12,18 @@
         </a>
     </div>
 
+ <div class="col-md-12 col-sm-12 mb-3">
+    <?php include("process_add_fournisseur.php"); ?>
+    <?php if ($error): ?>
+    <div class="alert alert-danger text-center border-0 rounded-0"><?= $error ?></div>
+    <?php endif; ?>
+
+    <?php if ($success): ?>
+        <div class="alert alert-success text-center border-0 rounded-0"><?= $success ?></div>
+    <?php endif;?>
+</div>
+
+
 
 <div class="col-lg-12 col-sm-12">
     <div class="card shadow mt-3 border-0 rounded-0 p-3">
@@ -21,7 +33,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Nom <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" name="first_name"class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -30,7 +42,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Prenom <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" name="last_name"class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -39,7 +51,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Email <span class="text-danger">*</span></label>
-                    <input type="email" class="form-control" required>
+                    <input type="email" name="email"class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -48,7 +60,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Phone number <span class="text-danger">*</span></label>
-                    <input type="tell" class="form-control" required>
+                    <input type="tel" name="phone_number"class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -57,7 +69,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Phone number 2 <span class="text-danger">*</span></label>
-                    <input type="tell" class="form-control" >
+                    <input type="tel" name="phone_number-2"class="form-control" >
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -67,7 +79,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Address <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" name="address"class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -76,25 +88,16 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Numero CNI <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required>
+                    <input type="text" name="cni_number"class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
                 </div>
-
-                <div class="col-lg-4 col-sm-12 mb-3">
-                    <label for="">Site Web <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" required>
-                    <div class="invalid-feedback">
-                        ce champ est requis
-                    </div>
-                </div>
-
 
             </div>
             
             <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-primary border-0 rounded-0 mt-3">save</button>
+                <button type="submit" name="save_fournisseur"class="btn btn-primary border-0 rounded-0 mt-3">save</button>
                 <button type="reset" class="btn btn-danger border-0 rounded-0">cancel</button>
             </div>
 

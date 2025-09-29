@@ -10,6 +10,7 @@ $totalPages = $pagination['total_pages'];
 $currentPage = $pagination['current_page'];
 ?>
 
+
 <div class="container mt-5 py-5 pb-5">
   <div class="col-lg-12 col-sm-12">
     <div class="d-flex justify-content-between align-items-center">
@@ -21,9 +22,20 @@ $currentPage = $pagination['current_page'];
     </div>
   </div>
 
+
+  <div class="col-lg-12 col-sm-12 mb-3">
+     <?php if(!empty($_GET["message"])) : ?>
+        <?php $message = $_GET["message"]; ?>
+        <span class="text-info"><?php echo $message; ?> !</span>
+      <?php endif; ?>
+  </div>
+
+
+
   <div class="col-lg-12 col-sm-12 mb-3 mt-3">
-    <div class="card shadow p-3 rounded-0 border-0">
-      <table class="table table-striped table-bordered text-center table-hover">
+    <div class="card shadow p-3 rounded-0 border-0"> 
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered text-center table-hover">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -33,7 +45,8 @@ $currentPage = $pagination['current_page'];
             <th scope="col">Adresse</th>
             <th scope="col">Créer le</th>
             <th scope="col">Statut</th>
-            <th scope="col">Actions</th>
+             <th scope="col">Actions</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -48,31 +61,37 @@ $currentPage = $pagination['current_page'];
                 <td><?= htmlspecialchars($client['created_at']) ?></td>
                 <td>
                     <?php if ($client['is_active']): ?>
-                        <span class="badge bg-success border-0 rounded-0 text-white py-2 px-2">Actif</span>
+                        <span class="badge bg-success border-0 rounded-0 text-white px-2 py-2">Actif</span>
                         <?php else: ?>
-                    <span class="badge bg-danger border-0 rounded-0 text-white py-2 px-2">Inactif</span>
+                            <span class="badge bg-danger border-0 rounded-0 text-white px-2 py-2">Inactif</span>
                     <?php endif; ?>
                 </td>
                 <td>
                     <div class="d-flex align-items-center justify-content-center">
-                       <?php if ($client['is_active']): ?>
-                        <a href="deactivate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none py-2 px-2 mx-2 ">Desactiver</a>
+
+                    <?php if ($client['is_active']): ?>
+                        <a  href="deactivate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Désactiver</a>
                         <?php else: ?>
-                    <a href="activate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-success border-0 rounded-0 text-white text-decoration-none py-2 px-2 mx-2">Activer</a>
-                    <?php endif; ?> 
-                    <a href="update_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-warning border-0 rounded-0 text-white text-decoration-none py-2 px-2 mx-2">Modifier</a>
-                    <a href="delete_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none py-2 px-2 mx-2">Supprimer</a>
+                            <a href="activate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-success border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Activer</a>
+                    <?php endif; ?>
+
+                    <a href="update_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-warning border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Modifier</a>
+                    <a href="delete_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Supprimer</a>
+
+
                     </div>
                 </td>
               </tr>
             <?php endforeach; ?>
           <?php else: ?>
             <tr>
-              <td colspan="7">Aucun élément trouvé</td>
+              <td colspan="12">Aucun élément trouvé</td>
             </tr>
           <?php endif; ?>
         </tbody>
       </table>
+      </div>
+    
       <div class="pagination">
     <ul class="pagination">
         <?php if ($currentPage > 1): ?>

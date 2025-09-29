@@ -5,3 +5,22 @@
 
     font-family: "Rubik", sans-serif;
 }
+.iti__selected-dial-code {
+    display: none;
+}
+.iti {
+    width: 100% !important; /* Forcer la largeur à 100 % */
+    max-width: 100%; /* Empêche la restriction de largeur */
+}
+
+.iti__flag-container {
+    background-color: #f8f9fa; /* Optionnel */
+}
+.iti {
+    width: 100% !important; /* Forcer la largeur à 100 % */
+    max-width: 100%; /* Empêche la restriction de largeur */
+}
+
+.iti__flag-container {
+    background-color: #f8f9fa; /* Optionnel */
+}

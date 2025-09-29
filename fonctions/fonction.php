@@ -78,4 +78,108 @@ function get_all_clients($connexion, int $page = 1, int $limit = 25): array {
 ];
 }
 
+
+function get_all_fournisseurs($connexion, int $page = 1, int $limit = 25): array {
+    $offset = ($page - 1) * $limit;
+
+    //  Récupérer le total des utilisateurs
+    $count_users = $connexion->query("SELECT COUNT(*) FROM tlbl_fournisseurs WHERE is_deleted = 0");
+    $total = (int) $count_users->fetchColumn();
+    $total_pages = max(1, ceil($total / $limit)); // éviter division par zéro
+
+    //  Préparer la requête paginée
+    $all_users = $connexion->prepare("
+        SELECT * 
+        FROM tlbl_fournisseurs 
+        WHERE is_deleted = 0 
+        ORDER BY created_at DESC 
+        LIMIT :limit OFFSET :offset
+    ");
+    $all_users->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $all_users->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $all_users->execute();
+    $users = $all_users->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'data' => $users,
+        'total_pages' => $total_pages,
+        'current_page' =>$page
+];
+}
+
+
+function get_all_category_products($connexion, int $page = 1, int $limit = 25): array {
+    $offset = ($page - 1) * $limit;
+
+    //  Récupérer le total des utilisateurs
+    $count_users = $connexion->query("SELECT COUNT(*) FROM tlbl_category_products WHERE is_deleted = 0");
+    $total = (int) $count_users->fetchColumn();
+    $total_pages = max(1, ceil($total / $limit)); // éviter division par zéro
+
+    //  Préparer la requête paginée
+    $all_users = $connexion->prepare("
+        SELECT * 
+        FROM tlbl_category_products 
+        WHERE is_deleted = 0 
+        ORDER BY created_at DESC 
+        LIMIT :limit OFFSET :offset
+    ");
+    $all_users->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $all_users->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $all_users->execute();
+    $users = $all_users->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'data' => $users,
+        'total_pages' => $total_pages,
+        'current_page' =>$page
+];
+}
+
+
+function get_active_fournisseurs($connexion){
+    $fournisseur = $connexion->prepare('SELECT * FROM tlbl_fournisseurs WHERE is_active = 1 AND is_deleted = 0 ORDER BY created_at DESC');
+    $fournisseur->execute();
+    return $fournisseur->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+function get_active_category_products($connexion){
+    $category_product = $connexion->prepare('SELECT * FROM tlbl_category_products WHERE is_active = 1 AND is_deleted = 0 ORDER BY created_at DESC');
+    $category_product->execute();
+    return $category_product->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+
+function get_all_products($connexion, int $page = 1, int $limit = 25): array {
+    $offset = ($page - 1) * $limit;
+
+    //  Récupérer le total des utilisateurs
+    $count_users = $connexion->query("SELECT COUNT(*) FROM tlbl_products WHERE is_deleted = 0");
+    $total = (int) $count_users->fetchColumn();
+    $total_pages = max(1, ceil($total / $limit)); // éviter division par zéro
+
+    //  Préparer la requête paginée
+    $all_users = $connexion->prepare("
+        SELECT * 
+        FROM tlbl_products 
+        WHERE is_deleted = 0 
+        ORDER BY created_at DESC 
+        LIMIT :limit OFFSET :offset
+    ");
+    $all_users->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $all_users->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $all_users->execute();
+    $users = $all_users->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'data' => $users,
+        'total_pages' => $total_pages,
+        'current_page' =>$page
+];
+}
+
+
+
 ?>

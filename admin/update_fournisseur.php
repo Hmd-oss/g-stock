@@ -1,10 +1,28 @@
 <?php include("../include/menu.php"); ?>
 
+<?php 
+include("../database/connexion.php");
+if (isset ($_GET["uuid"])) {
+    $uuid = $_GET["uuid"];
+    $query = "SELECT * FROM tlbl_fournisseurs WHERE uuid = :uuid";
+    $execute_request = $connexion->prepare($query);
+    $execute_request->bindParam(":uuid", $uuid);
+    $execute_request->execute();
+    $fournisseur = $execute_request->fetch(PDO::FETCH_ASSOC);
+
+}else{
+    header("Location: fournisseur.php?message=uuid du fournisseur introuvable");
+    exit;
+}
+
+
+?>
+
 <div class="container mt-5 py-5 pb-5">
 <div class="col-lg-12 col-sm-12">
     <div class="d-flex justify-content-between align-items-center">
-        <h4 class="fw-bold text-uppercase text-primary mb-0">Ajouter un client</h4>
-        <a href="client.php" class="btn btn-secondary border-0 rounded-0">
+        <h4 class="fw-bold text-uppercase text-primary mb-0">Modifier un fournisseur</h4>
+        <a href="fournisseur.php" class="btn btn-secondary border-0 rounded-0">
            <i class="fa-solid fa-backward me-1"></i>
             Annuler
 
@@ -13,7 +31,7 @@
 
 
     <div class="col-md-12 col-sm-12 mb-3">
-    <?php include("process_add_client.php"); ?>
+    <?php include("process_update_fournisseur.php"); ?>
     <?php if ($error): ?>
     <div class="alert alert-danger text-center border-0 rounded-0"><?= $error ?></div>
     <?php endif; ?>
@@ -31,7 +49,8 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Nom <span class="text-danger">*</span></label>
-                    <input type="text" name="first_name" class="form-control" required>
+                    <input type="text" value="<?= $fournisseur["first_name"]?>"   name="first_name" class="form-control" required>
+                    <input type="hidden" value="<?= $fournisseur["uuid"]?>"   name="uuid" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -40,7 +59,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Prenom <span class="text-danger">*</span></label>
-                    <input type="text" name="last_name" class="form-control" required>
+                    <input type="text" value="<?= $fournisseur["last_name"]?>" name="last_name" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -49,7 +68,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Email <span class="text-danger">*</span></label>
-                    <input type="email" name="email" class="form-control" required>
+                    <input type="email" value="<?= $fournisseur["email"]?>" name="email" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -58,7 +77,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Phone number <span class="text-danger">*</span></label>
-                    <input type="tel" name="phone_number" id="phone" class="form-control" required>
+                    <input type="tel" value="<?= $fournisseur["phone_number"]?>" name="phone_number" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -67,7 +86,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Phone number 2 <span class="text-danger">*</span></label>
-                    <input type="tel" name="phone_number_2" class="form-control" >
+                    <input type="tel" value="<?= $fournisseur["phone_number_2"]?>" name="phone_number_2 " class="form-control" >
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -77,7 +96,7 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Address <span class="text-danger">*</span></label>
-                    <input type="text" name="address" class="form-control" required>
+                    <input type="text" value="<?= $fournisseur["address"]?>" name="address" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -86,40 +105,58 @@
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Numero CNI <span class="text-danger">*</span></label>
-                    <input type="text" name="cni_number" class="form-control" required>
+                    <input type="text" value="<?= $fournisseur["cni_number"]?>" name="cni_number" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
-                </div>
 
 
             </div>
             
             <div class="d-flex justify-content-between">
-                <button type="submit" name="save_client" class="btn btn-primary border-0 rounded-0 mt-3">save</button>
+                <button type="submit" name="update_fournisseur" class="btn btn-primary border-0 rounded-0 mt-3">modifier</button>
                 <button type="reset" class="btn btn-danger border-0 rounded-0">cancel</button>
             </div>
 
         </form>
     </div>
 </div>
-</div>
+
+
+
+
 </div>
 
+
+
 <script src="../assets/js/main.js"></script>
+
+
 <script>
-    const phoneInput = document.querySelector("#phone");
-const iti = intlTelInput(phoneInput, {
-    initialCountry: "auto",
-    geoIpLookup: function(callback) {
-        fetch("https://ipapi.co/json")
-            .then(res => res.json())
-            .then(data => callback(data.country_code))
-            .catch(() => callback("us"));
-    },
-    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js",
-    separateDialCode: false, // Le code pays fait partie du numéro
-    nationalMode: false, // Force le format international
-    autoFormat: true, // Formatage automatique
-});
-</script>
+    
+    function hideAlert(alertElement) {
+        if (alertElement) {
+            setTimeout(function name(params) {
+                alertElement.style.display = 'none';
+            }, 2000);
+        }
+    }
+
+    var fournisseurAlert = document.querySelector('.fournisseur-alert');
+
+    hideAlert(fournisseurAlert);
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
