@@ -152,6 +152,14 @@ function get_active_category_products($connexion){
 }
 
 
+function get_active_products($connexion){
+    $category_product = $connexion->prepare('SELECT * FROM tlbl_products WHERE is_active = 1 AND is_deleted = 0 ORDER BY created_at DESC');
+    $category_product->execute();
+    return $category_product->fetchAll(PDO::FETCH_ASSOC);
+
+}
+
+
 function get_all_products($connexion, int $page = 1, int $limit = 25): array {
     $offset = ($page - 1) * $limit;
 
