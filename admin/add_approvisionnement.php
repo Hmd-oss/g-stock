@@ -26,7 +26,11 @@ $products = get_active_products($connexion);
             <label for="">Fournisseur <span class="text-danger">*</span></label>
                 <select class="form-select" required>
                 <option selected disabled value="">Choisir...</option>
-                <option></option>
+                <?php foreach($fournisseurs as $fournisseur): ?>
+                    <option value="<?= $fournisseur["uuid"]  ?>">
+                        <?= $fournisseur["last_name"] . ' ' .$fournisseur["first_name"]  ?>
+                    </option>
+                <?php endforeach; ?>
                 </select>
                 <div class="invalid-feedback">
                     ce champ est requis
@@ -35,10 +39,14 @@ $products = get_active_products($connexion);
 
 
         <div class="col-lg-4 col-sm-12 mb-3">
-            <label for="">Client<span class="text-danger">*</span></label>
+            <label for="">Produits<span class="text-danger">*</span></label>
                 <select class="form-select"  required>
                 <option selected disabled value="">Choisir...</option>
-                <option></option>
+                <?php foreach($products as $product): ?>
+                    <option value="<?= $product["uuid"]  ?>">
+                        <?= $product["name"]  ?>
+                    </option>
+                <?php endforeach; ?>
                 </select>
                 <div  class="invalid-feedback">
                   Ce champ est requis
