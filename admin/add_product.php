@@ -17,6 +17,19 @@ $category_products = get_active_category_products($connexion);
     </div>
 
 
+
+        <div class="col-md-12 col-sm-12 mb-3">
+    <?php include("process_add_product.php"); ?>
+    <?php if ($error): ?>
+    <div class="alert alert-danger text-center border-0 rounded-0"><?= $error ?></div>
+    <?php endif; ?>
+
+    <?php if ($success): ?>
+        <div class="alert alert-success text-center border-0 rounded-0"><?= $success ?></div>
+    <?php endif;?>
+</div>
+
+
  
 <div class="col-lg-12 col-sm-12">
     <div class="card shadow mt-3 border-0 rounded-0 p-3">
@@ -49,7 +62,7 @@ $category_products = get_active_category_products($connexion);
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Code <span class="text-danger">*</span></label>
-                    <input type="number" min="0" name="code" class="form-control" required>
+                    <input type="number" name="code" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -89,7 +102,7 @@ $category_products = get_active_category_products($connexion);
 
                 <div class="col-lg-4 col-sm-12 mb-3">
                     <label for="">Qte seuil <span class="text-danger">*</span></label>
-                    <input type="number" min="0" name="qte seuil" class="form-control" required>
+                    <input type="number" min="0" name="qte_seuil" class="form-control" required>
                     <div class="invalid-feedback">
                         ce champ est requis
                     </div>
@@ -112,7 +125,7 @@ $category_products = get_active_category_products($connexion);
                 </div>
                 
             <div class="d-flex justify-content-between">
-                <button type="submit" name="update_fournisseur" class="btn btn-primary border-0 rounded-0 mt-3">Modifier</button>
+                <button type="submit" name="add_products" class="btn btn-primary border-0 rounded-0 mt-3">Save</button>
                 <button type="reset" class="btn btn-danger border-0 rounded-0">cancel</button>
             </div>
 
