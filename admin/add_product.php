@@ -18,7 +18,7 @@ $category_products = get_active_category_products($connexion);
 
 
 
-        <div class="col-md-12 col-sm-12 mb-3">
+<div class="col-md-12 col-sm-12 mb-3">
     <?php include("process_add_product.php"); ?>
     <?php if ($error): ?>
     <div class="alert alert-danger text-center border-0 rounded-0"><?= $error ?></div>

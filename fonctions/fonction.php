@@ -18,6 +18,20 @@ function getCurrentDateTime() {
     return date("d-m-Y H:i:s"); // Renvoie la date et l'heure actuelles au format "AAAA-MM-JJ HH:MM:SS"
 }
 
+function genererCodeVente(): string {
+    // Préfixe facultatif (ex: "VNT" pour "Vente")
+    $prefixe = "VNT";
+    
+    // Timestamp pour l'unicité (date + heure)
+    $date = date("YmdHis"); // Exemple : 20251006193455
+
+    // 4 caractères aléatoires
+    $random = strtoupper(substr(md5(uniqid(mt_rand(), true)), 0, 4));
+
+    // Construction du code final
+    return $prefixe . "-" . $date . "-" . $random;
+}
+
 
 
 function validateEmail($email) {
@@ -49,6 +63,10 @@ function getCurrentPageName() {
     
     return $pageName;
 }
+
+
+
+
 
 function get_all_clients($connexion, int $page = 1, int $limit = 25): array {
     $offset = ($page - 1) * $limit;
@@ -144,6 +162,7 @@ function get_active_fournisseurs($connexion){
 }
 
 
+
 function get_active_category_products($connexion){
     $category_product = $connexion->prepare('SELECT * FROM tlbl_category_products WHERE is_active = 1 AND is_deleted = 0 ORDER BY created_at DESC');
     $category_product->execute();
@@ -159,6 +178,11 @@ function get_active_products($connexion){
 
 }
 
+function get_active_clents($connexion){
+    $clients = $connexion->prepare('SELECT * FROM tlbl_clients WHERE is_active = 1 AND is_deleted = 0 ORDER BY created_at DESC');
+    $clients->execute();
+    return $clients->fetchAll(PDO::FETCH_ASSOC);
+}
 
 function get_all_products($connexion, int $page = 1, int $limit = 25): array {
     $offset = ($page - 1) * $limit;
@@ -187,6 +211,48 @@ function get_all_products($connexion, int $page = 1, int $limit = 25): array {
         'current_page' =>$page
 ];
 }
+
+function get_all_approvisionnements($connexion, int $page = 1, int $limit = 25): array {
+    $offset = ($page - 1) * $limit;
+
+    // Total
+    $count_users = $connexion->query("SELECT COUNT(*) FROM tlbl_approvisionnement WHERE is_deleted = 0");
+    $total = (int) $count_users->fetchColumn();
+    $total_pages = max(1, ceil($total / $limit));
+
+    // Jointure pour récupérer le nom du fournisseur
+    $sql = "
+    SELECT 
+        a.*, 
+        f.first_name, 
+        f.last_name, 
+        p.name 
+    FROM tlbl_approvisionnement a
+    JOIN tlbl_fournisseurs f 
+        ON a.fournisseur_uuid = f.uuid
+    JOIN tlbl_products p
+        ON a.product_uuid = p.uuid
+    WHERE a.is_deleted = 0 
+    ORDER BY a.created_at DESC
+    LIMIT :limit OFFSET :offset
+";
+
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $approvisionnements = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'data' => $approvisionnements,
+        'total_pages' => $total_pages,
+        'current_page' => $page
+    ];
+}
+
+
+
 
 
 

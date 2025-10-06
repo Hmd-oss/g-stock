@@ -3,9 +3,9 @@
 require_once('../fonctions/fonction.php');
 
 $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-$pagination = get_all_clients($connexion, $page);
+$pagination = get_all_approvisionnements($connexion, $page);
 
-$users = $pagination['data'];
+$approvisionnements = $pagination['data'];
 $totalPages = $pagination['total_pages'];
 $currentPage = $pagination['current_page'];
 ?>
@@ -23,12 +23,15 @@ $currentPage = $pagination['current_page'];
   </div>
 
 
-  <div class="col-lg-12 col-sm-12 mb-3">
+  <div class="col-lg-12 col-sm-12 mb-3 mt-3">
      <?php if(!empty($_GET["message"])) : ?>
         <?php $message = $_GET["message"]; ?>
-        <span class="text-info"><?php echo $message; ?> !</span>
+        <div class="alert alert-info text-center rounded-0 "><?php echo $message; ?> !</div>
       <?php endif; ?>
   </div>
+
+
+  <!-- <?php var_dump($approvisionnements) ?> -->
 
 
 
@@ -41,17 +44,33 @@ $currentPage = $pagination['current_page'];
         <tr>
         <th scope="col">#</th>
         <th scope="col">Fournisseur</th>
-        <th scope="col">Client</th>
+        <th scope="col">Produits</th>
         <th scope="col">Nouvelle quantité</th>
         <th scope="col">Date d'approvisionnement</th>
         <th scope="col">Actions</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td colspan="12">Aucun élément trouvé</td>
-        </tr>
+       
     </tbody>
+    <?php if (!empty($approvisionnements)): ?>
+        <?php foreach ($approvisionnements as $index => $approvisionnement): ?>
+            <tr>
+            <td><?= ($index + 1) + ($currentPage - 1) * 25 ?></td>
+                <td><?= htmlspecialchars($approvisionnement['first_name'] . ' ' . $approvisionnement['last_name']) ?></td>
+                <td><?= htmlspecialchars(string: $approvisionnement['name']) ?></td>
+                <td><?= htmlspecialchars($approvisionnement['new_qte']) ?></td>
+                <td><?= htmlspecialchars($approvisionnement['created_at']) ?></td>
+                <td>
+                <a href="delete_approvisionnement.php?uuid=<?= htmlspecialchars($approvisionnement['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Supprimer</a>
+              </td>
+            </tr>
+        <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+              <td colspan="10">Aucun élément trouvé</td>
+            </tr>
+          <?php endif; ?>
     </table>
     
     </div>
@@ -60,3 +79,12 @@ $currentPage = $pagination['current_page'];
     </div>
     
 </div>
+<!-- <script>
+  
+  $(document).ready(function() {
+      setTimeout(function() {
+        $(".alert").alert('close');
+      }, 2000);
+    });
+
+</script> -->

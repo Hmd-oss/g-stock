@@ -29,20 +29,20 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="../admin/client.php">Clients</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="../admin/fournisseur.php">Fournisseurs</a>
+        <li class="nav-item active">
+          <a class="nav-link active" href="../admin/fournisseur.php">Fournisseurs</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../admin/product.php">Produits</a>
+          <a class="nav-link active" href="../admin/product.php">Produits</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Ventes</a>
+          <a class="nav-link active" href="../admin/vente.php">Ventes</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Factures</a>
+          <a class="nav-link active" href="#">Factures</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../admin/category_product.php">Category_Produits</a>
+          <a class="nav-link active" href="../admin/category_product.php">Category_Produits</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="../admin/approvisionnement.php">Approvisionnement</a>
