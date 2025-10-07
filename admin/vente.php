@@ -2,13 +2,13 @@
 <?php
 require_once('../fonctions/fonction.php');
 
-// $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
-// $pagination = get_all_ventes($connexion, $page);
+ $page = isset($_GET['page']) ? max(1, (int)$_GET['page']) : 1;
+ $pagination = get_all_ventes($connexion, $page);
 
-// $ventes = $pagination['data'];
-// $totalPages = $pagination['total_pages'];
-// $currentPage = $pagination['current_page'];
-?>  
+ $ventes = $pagination['data'];
+ $totalPages = $pagination['total_pages'];
+ $currentPage = $pagination['current_page'];
+ ?>  
 
 <div class="container mt-5 py-5 pb-5">
   <div class="col-lg-12 col-sm-12">
@@ -24,7 +24,7 @@ require_once('../fonctions/fonction.php');
   <div class="col-lg-12 col-sm-12 mb-3">
      <?php if(!empty($_GET["message"])) : ?>
         <?php $message = $_GET["message"]; ?>
-        <span class="text-info"><?php echo $message; ?> !</span>
+        <div class="alert alert-info text-center rounded-0 "><?php echo $message; ?> !</div>
       <?php endif; ?>
   </div>
 
@@ -41,17 +41,32 @@ require_once('../fonctions/fonction.php');
             <th scope="col">Quantité</th>
             <th scope="col">Prix total</th>
             <th scope="col">Date</th>
-            <th scope="col">Statut</th>
             <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
+           
+        <?php if (!empty($ventes)): ?>
+        <?php foreach ($ventes as $index => $vente): ?>
             <tr>
-             <td colspan = "10" >
-                Pas d'éléments trouvés
+            <td><?= ($index + 1) + ($currentPage - 1) * 25 ?></td>
+            <td><?= htmlspecialchars(string: $vente['sale_code']) ?></td>
+                <td><?= htmlspecialchars($vente['first_name'] . ' ' . $vente['last_name']) ?></td>
+                <td><?= htmlspecialchars(string: $vente['name']) ?></td>
+                <td><?= htmlspecialchars($vente['quantity']) ?></td>
+                <td><?= htmlspecialchars($vente['total_price']) ?></td>
+                <td><?= htmlspecialchars($vente['created_at']) ?></td>
+                <td>
+                <a href="delete_vente.php?uuid=<?= htmlspecialchars($vente['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Supprimer</a>
+                <a href="print_vente.php?uuid=<?= htmlspecialchars($vente['uuid']) ?>" class="badge bg-warning border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Imprimer</a>
               </td>
             </tr>
-          
+        <?php endforeach; ?>
+        <?php else: ?>
+            <tr>
+              <td colspan="10">Aucun élément trouvé</td>
+            </tr>
+            <?php endif; ?>
         </tbody>
       </table>
       </div>

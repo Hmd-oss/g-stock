@@ -178,7 +178,7 @@ function get_active_products($connexion){
 
 }
 
-function get_active_clents($connexion){
+function get_active_clients($connexion){
     $clients = $connexion->prepare('SELECT * FROM tlbl_clients WHERE is_active = 1 AND is_deleted = 0 ORDER BY created_at DESC');
     $clients->execute();
     return $clients->fetchAll(PDO::FETCH_ASSOC);
@@ -251,7 +251,46 @@ function get_all_approvisionnements($connexion, int $page = 1, int $limit = 25):
     ];
 }
 
+function get_all_ventes($connexion, int $page = 1, int $limit = 25): array {
+    $offset = ($page - 1) * $limit;
 
+    // Total
+    $count_sales = $connexion->query("SELECT COUNT(*) FROM tlbl_sales WHERE is_deleted = 0");
+    $total = (int) $count_sales->fetchColumn();
+    $total_pages = max(1, ceil($total / $limit));
+
+    $sql= "
+    SELECT 
+        s.*, 
+        c.first_name, 
+        c.last_name, 
+        p.name 
+    FROM tlbl_sales s
+    JOIN tlbl_clients c 
+        ON s.client_uuid = c.uuid
+    JOIN tlbl_products p
+        ON s.product_uuid = p.uuid
+    WHERE s.is_deleted = 0 
+    ORDER BY s.created_at DESC
+    LIMIT :limit OFFSET :offset
+    ";
+
+    $stmt = $connexion->prepare($sql);
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+
+    $ventes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+        'data'=> $ventes,
+        'total_pages' => $total_pages,
+        'current_page' => $page
+    ];
+
+    
+
+}
 
 
 

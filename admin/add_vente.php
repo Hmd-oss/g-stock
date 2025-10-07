@@ -2,7 +2,7 @@
 <?php 
 include("../fonctions/fonction.php");
 $products = get_active_products($connexion);
-$clients = get_active_clents($connexion);    
+$clients = get_active_clients($connexion);    
 
 
 ?>
@@ -17,6 +17,18 @@ $clients = get_active_clents($connexion);
 
         </a>
     </div>
+
+
+    <div class="col-md-12 col-sm-12 mb-3">
+    <?php include("process_add_vente.php"); ?>
+    <?php if ($error): ?>
+    <div class="alert alert-danger text-center border-0 rounded-0"><?= $error ?></div>
+    <?php endif; ?>
+
+    <?php if ($success): ?>
+        <div class="alert alert-success text-center border-0 rounded-0"><?= $success ?></div>
+    <?php endif;?>
+</div>
 
     <div class="col-lg-12 col-sm-12">
         <div class="card shadow mt-3 border-0 rounded-0 p-3">
@@ -64,6 +76,10 @@ $clients = get_active_clents($connexion);
              
             
         </div>
+            
+            <div class="d-flex justify-content-between">
+                <button type="submit" name="save_vente" class="btn btn-primary border-0 rounded-0 mt-3">save</button>
+                <button type="reset" class="btn btn-danger border-0 rounded-0">cancel</button>
             </div>
         </form>
         </div>

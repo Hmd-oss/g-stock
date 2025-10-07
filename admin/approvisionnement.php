@@ -51,8 +51,6 @@ $currentPage = $pagination['current_page'];
         </tr>
     </thead>
     <tbody>
-       
-    </tbody>
     <?php if (!empty($approvisionnements)): ?>
         <?php foreach ($approvisionnements as $index => $approvisionnement): ?>
             <tr>
@@ -71,6 +69,9 @@ $currentPage = $pagination['current_page'];
               <td colspan="10">Aucun élément trouvé</td>
             </tr>
           <?php endif; ?>
+       
+    </tbody>
+    
     </table>
     
     </div>

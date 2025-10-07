@@ -70,13 +70,13 @@ $currentPage = $pagination['current_page'];
                     <div class="d-flex align-items-center justify-content-center">
 
                     <?php if ($client['is_active']): ?>
-                        <a  href                    <a href="delete_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Supprimer</a>
-="deactivate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Désactiver</a>
+                        <a  href="deactivate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Désactiver</a>
                         <?php else: ?>
                             <a href="activate_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-success border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Activer</a>
                     <?php endif; ?>
 
                     <a href="update_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-warning border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Modifier</a>
+                    <a href="delete_client.php?uuid=<?= htmlspecialchars($client['uuid']) ?>" class="badge bg-danger border-0 rounded-0 text-white text-decoration-none px-2 py-2 mx-2">Supprimer</a>
 
 
                     </div>
